@@ -5,12 +5,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class RequestHandler implements Runnable{
+public class RequestHandler extends Thread{
 private Socket client;
 	
 	public RequestHandler(Socket client){
 		this.client = client;
-	}	
+	}
+	
+	@Override
 	public void run(){
 		try {
 			ObjectInputStream inStream = new ObjectInputStream(client.getInputStream());

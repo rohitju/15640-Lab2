@@ -9,15 +9,25 @@ import java.util.HashMap;
 public class Registry {
 	
 	HashMap<String, RemoteObject> objectRegistry = new HashMap<String, RemoteObject>();
+	static ServerSocket server = null;
+	
+	public void bind() {
+		
+	}
+	
+	public void lookup() {
+		
+	}
 	
 	public static void main(String args[]){
 		try {
-			ServerSocket server = new ServerSocket(Constants.port);
+			server = new ServerSocket(Constants.port);
 			while (true) {
 				Socket client = server.accept();
 				RequestHandler handler = new RequestHandler(client);
 				new Thread(handler).start();
 				
+				server.close();
 			}
 		} catch (IOException e){
 			System.out.println("Error communicating with client " + e.getMessage());
