@@ -1,10 +1,9 @@
-package dsrmi.rmiregistry;
+package ds.rmi.rmiregistry;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.rmi.server.RemoteObject;
-import java.util.Dictionary;
 import java.util.HashMap;
 
 public class Registry {
