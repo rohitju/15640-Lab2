@@ -1,4 +1,4 @@
-package ds.rmi.rmiregistry;
+package ds.rmi.dispatcher;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -7,10 +7,11 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ConcurrentHashMap;
 
+import ds.rmi.rmiregistry.RegistryRequestHandler;
 import ds.rmi.util.Constants;
 import ds.rmi.util.RemoteObject;
 
-public class Registry extends Thread {
+public class Dispatcher extends Thread {
 
 	public static ConcurrentHashMap<String, RemoteObject> objectRegistry = new ConcurrentHashMap<String, RemoteObject>();
 	static ServerSocket server = null;
@@ -20,7 +21,7 @@ public class Registry extends Thread {
 	@Override
 	public void run() {
 		try {
-			server = new ServerSocket(Constants.REGISTRY_PORT);
+			server = new ServerSocket(Constants.DISPATCHER_PORT);
 			while (true) {
 				Socket client = server.accept();
 				RegistryRequestHandler handler = new RegistryRequestHandler(client);
@@ -34,7 +35,7 @@ public class Registry extends Thread {
 	}
 
 	public static void main(String args[]) {
-		Registry registry = new Registry();
-		registry.start();
+		Dispatcher dispatcher = new Dispatcher();
+		dispatcher.start();
 	}
 }
