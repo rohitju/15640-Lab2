@@ -23,18 +23,26 @@ public class Registry extends Thread {
 			server = new ServerSocket(Constants.REGISTRY_PORT);
 			while (true) {
 				Socket client = server.accept();
+				System.out.println("Client connected " + client.getInetAddress());
 				RegistryRequestHandler handler = new RegistryRequestHandler(client);
 				new Thread(handler).start();
-				server.close();
 			}
+			//server.close();
 		} catch (IOException e) {
 			System.out.println("Error communicating with client "
 					+ e.getMessage());
 		}
 	}
+	
+	public static void printHashMap() {
+		for(String key : objectRegistry.keySet()) {
+			System.out.println("Key: " + key + " and value: " + objectRegistry.get(key).getServiceName());
+		}
+	}
 
 	public static void main(String args[]) {
 		Registry registry = new Registry();
+		System.out.println("Registry started");
 		registry.start();
 	}
 }

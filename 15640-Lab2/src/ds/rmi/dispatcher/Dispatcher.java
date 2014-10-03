@@ -7,7 +7,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ConcurrentHashMap;
 
-import ds.rmi.rmiregistry.RegistryRequestHandler;
 import ds.rmi.util.Constants;
 import ds.rmi.util.RemoteObject;
 
@@ -24,9 +23,9 @@ public class Dispatcher extends Thread {
 			server = new ServerSocket(Constants.DISPATCHER_PORT);
 			while (true) {
 				Socket client = server.accept();
-				RegistryRequestHandler handler = new RegistryRequestHandler(client);
+				DispatcherRequesthandler handler = new DispatcherRequesthandler(client);
 				new Thread(handler).start();
-				server.close();
+				//server.close();
 			}
 		} catch (IOException e) {
 			System.out.println("Error communicating with client "
@@ -36,6 +35,7 @@ public class Dispatcher extends Thread {
 
 	public static void main(String args[]) {
 		Dispatcher dispatcher = new Dispatcher();
+		System.out.println("Dispatcher started");
 		dispatcher.start();
 	}
 }

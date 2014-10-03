@@ -23,7 +23,15 @@ public class RemoteObject implements Serializable{
 		return interfaceName;
 	}
 	
-	Object localize() 
+	public String getHost(){
+		return host;
+	}
+	
+	public int getPort(){
+		return port;
+	}
+	
+	public Object localize() 
 	{
 		Class<?> c = null;
 		Constructor<?> con = null;
@@ -32,6 +40,7 @@ public class RemoteObject implements Serializable{
 			c = Class.forName(interfaceName + "_stub");
 			con = c.getConstructor(String.class, Integer.class);
 			o = con.newInstance(host, port);
+			System.out.println("Class name is " + c.getName());
 		} catch (NoSuchMethodException e) {
 			System.out.println("Remote Object: No such method: " + e.getMessage());
 		} catch (SecurityException e) {
