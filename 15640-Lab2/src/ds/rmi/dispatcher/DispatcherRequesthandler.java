@@ -32,12 +32,17 @@ public class DispatcherRequesthandler extends Thread {
 				RemoteMethod rm = (RemoteMethod) msg.getPayload();
 				String className = rm.getClassName();
 				String methodName = rm.getMethodName();
-				// TODO get parameters
 				Class<?> c = Class.forName(className);
-				Constructor<?> con = c.getConstructor();
-				Object o = con.newInstance();
-				Method method = o.getClass().getMethod(methodName);
-				Object ret = method.invoke(o);
+				Object o = null;
+				if (Dispatcher.objectList.containsKey(rm.getObjectId()))
+					o = Dispatcher.objectList.get(rm.getObjectId());
+				else {
+					Constructor<?> con = c.getConstructor();
+					o = con.newInstance();
+					Dispatcher.objectList.put(rm.getObjectId(), o);
+				}
+				Method method = o.getClass().getMethod(methodName, rm.getParameterTypes());
+				Object ret = method.invoke(o, rm.getParams());
 				RMIMessage result = new RMIMessage(Command.RESULT, ret);
 				outStream.writeObject(result);
 			}

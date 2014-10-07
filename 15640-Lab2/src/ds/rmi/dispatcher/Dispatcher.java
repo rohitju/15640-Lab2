@@ -8,11 +8,10 @@ import java.net.Socket;
 import java.util.concurrent.ConcurrentHashMap;
 
 import ds.rmi.util.Constants;
-import ds.rmi.util.RemoteObject;
 
 public class Dispatcher extends Thread {
 
-	public static ConcurrentHashMap<String, RemoteObject> objectRegistry = new ConcurrentHashMap<String, RemoteObject>();
+	public static ConcurrentHashMap<String, Object> objectList = new ConcurrentHashMap<String, Object>();
 	static ServerSocket server = null;
 	ObjectInputStream inStream = null;
 	ObjectOutputStream outStream = null;

@@ -1,17 +1,20 @@
 package ds.rmi.util;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class RemoteMethod implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String className;
 	private String methodName;
-	private ArrayList<Object> parameters;
+	private String objectId;
+	private Class<?>[] parameterTypes;
+	private Object[] parameters;
 	
-	public RemoteMethod(String cName, String mName, ArrayList<Object> params) {
+	public RemoteMethod(String cName, String mName, String id, Class<?>[] paramTypes, Object[] params) {
 		className = cName;
 		methodName = mName;
+		objectId = id;
+		parameterTypes = paramTypes;
 		parameters = params;
 	}
 	
@@ -23,7 +26,15 @@ public class RemoteMethod implements Serializable {
 		return methodName;
 	}
 	
-	public ArrayList<Object> getParams() {
+	public String getObjectId() {
+		return objectId;
+	}
+	
+	public Class<?>[] getParameterTypes() {
+		return parameterTypes;
+	}
+	
+	public Object[] getParams() {
 		return parameters;
 	}
 }

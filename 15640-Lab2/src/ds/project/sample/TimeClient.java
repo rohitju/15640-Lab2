@@ -12,8 +12,9 @@ public class TimeClient {
 		RemoteObject ro= null;
 		try {
 			ro = rm.lookup("ds.project.sample.Time");
-			Time_stub time = (Time_stub) ro.localize();
+			Time time = (Time) ro.localize();
 			System.out.println(time.getCurrentDate().toString());
+			System.out.println(time.getDateMinusDays(1));
 		} catch (RemoteException e) {
 			System.out.println("TimeClient: Not good: " + e.getMessage());
 		}
