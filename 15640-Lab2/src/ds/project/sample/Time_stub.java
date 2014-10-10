@@ -10,7 +10,9 @@ import java.util.UUID;
 
 import ds.rmi.util.Command;
 import ds.rmi.util.RMIMessage;
+import ds.rmi.util.RemoteException;
 import ds.rmi.util.RemoteMethod;
+import ds.rmi.util.RemoteObject;
 
 public class Time_stub implements Time {
 
@@ -25,7 +27,7 @@ public class Time_stub implements Time {
 	}
 	
 	@Override
-	public Date getCurrentDate() {
+	public Date getCurrentDate() throws RemoteException{
 		RemoteMethod rm = new RemoteMethod("ds.project.sample.TimeServer", "getCurrentDate", objKey, null, null);
 		RMIMessage message = new RMIMessage(Command.EXECUTE, rm);
 		RMIMessage reply = null;
@@ -92,6 +94,41 @@ public class Time_stub implements Time {
 			System.out.println("Time_stub: ClassNotFoundException: " + e.getMessage());
 		}
 		return date;
+	}
+	
+	@Override
+	public DateInterface_stub getDateObject() {
+		RemoteMethod rm = new RemoteMethod("ds.project.sample.TimeServer", "getDateObject", objKey, null, null);
+		RMIMessage message = new RMIMessage(Command.EXECUTE, rm);
+		RMIMessage reply = null;
+		ObjectInputStream inStream = null;
+		ObjectOutputStream outStream = null;
+		DateObject date = null;
+		RemoteObject dobj = null;
+		try {
+			System.out.println(host + " " + port);
+			Socket s = new Socket(host, port);			
+			outStream = new ObjectOutputStream(s.getOutputStream());
+			inStream = new ObjectInputStream(s.getInputStream());
+			outStream.writeObject(message);
+			System.out.println("Written message to dispatcher");
+			reply = (RMIMessage)inStream.readObject();
+			System.out.println("reading message from dispatcher");
+			if(reply != null) {
+				if(reply.getCommand() == Command.RESULT){
+					dobj = (RemoteObject) reply.getPayload();
+				}
+			}
+			s.close();
+		} catch (UnknownHostException e) {
+			System.out.println("Time_stub: UnknownHostException: " + e.getMessage());
+		} catch (IOException e) {
+			System.out.println("Time_stub: IOException: " + e.getMessage());
+		} catch (ClassNotFoundException e) {
+			System.out.println("Time_stub: ClassNotFoundException: " + e.getMessage());
+		}
+		
+		return (DateInterface_stub) dobj.localize();
 	}
 
 }

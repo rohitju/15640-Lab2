@@ -8,10 +8,10 @@ public class RemoteObject implements Serializable{
 	private static final long serialVersionUID = 1L;
 	String host;
 	int port;
-	int objKey;
+	String objKey;
 	String interfaceName;
 	
-	public RemoteObject(String h, int p, int o, String i)
+	public RemoteObject(String h, int p, String o, String i)
 	{
 		host = h;
 		port = p;

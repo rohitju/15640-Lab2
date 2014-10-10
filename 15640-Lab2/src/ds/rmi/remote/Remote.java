@@ -1,5 +1,7 @@
 package ds.rmi.remote;
 
-public interface Remote {
+import java.io.Serializable;
+
+public interface Remote extends Serializable{
 
 }

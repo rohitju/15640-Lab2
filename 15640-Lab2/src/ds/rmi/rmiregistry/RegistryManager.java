@@ -5,10 +5,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.rmi.RemoteException;
 
 import ds.rmi.util.Command;
 import ds.rmi.util.RMIMessage;
+import ds.rmi.util.RemoteException;
 import ds.rmi.util.RemoteObject;
 
 public class RegistryManager {

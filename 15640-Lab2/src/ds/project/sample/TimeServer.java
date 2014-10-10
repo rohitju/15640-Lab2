@@ -15,7 +15,7 @@ public class TimeServer implements Time {
 
 	public static void main(String[] args){
 		RegistryManager rm = new RegistryManager(args[0], Integer.parseInt(args[1]));
-		RemoteObject ro = new RemoteObject(args[2], Integer.parseInt(args[3]), 0, "ds.project.sample.Time");
+		RemoteObject ro = new RemoteObject(args[2], Integer.parseInt(args[3]), "", "ds.project.sample.Time");
 		rm.bind(ro);
 	}
 
@@ -24,5 +24,10 @@ public class TimeServer implements Time {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DATE, -days);
 		return cal.getTime();
+	}
+
+	@Override
+	public DateObject getDateObject() {
+		return new DateObject();
 	}
 }
